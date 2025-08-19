@@ -15,20 +15,20 @@
 
     </head>
 
-    <body class="">
-        <nav class="navbar navbar-expand-sm justify-center bg-white">
-            <div class="container-fluid justify-end ">
-                <h2 class="mb-4 text-2xl text-green-700 font-bold">Select</h2>
-                <select data-choose-theme class="focus:outline-none h-10 rounded-full px-3 border">
-                    <option value="">Default</option>
-                    <option value="dark">Dark</option>
-                    <option value="black">Black</option>
-                    <option value="🌸">🌸 Pink</option>
-                    <option value="🐬">🐬 Blue</option>
-                    <option value="🐤">🐤 Yellow</option>
-                    <option value="val">val</option>
-                    <option value="cupcake">cup</option>
-                </select>
+    <body >
+        <nav class="navbar navbar-expand-sm items-center justify-between bg-white">
+            <div>
+                <h1>h</h1>
+            </div>
+
+            <div >
+                <h2>
+                    h
+                </h2>
+            </div>
+
+            <div>
+                <x-theme-dropdown />
             </div>
 
         </nav>
