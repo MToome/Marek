@@ -17,7 +17,7 @@
     <body>
         <x-nav-bar />
 
-        <h1 class="text-3xl font-bold text-center m-5">{{ $heading }}</h1>
+        <h1 class="text-3xl font-bold text-center ">{{ $heading }}</h1>
 
         <div class="text-center">
             {{ $slot }}
