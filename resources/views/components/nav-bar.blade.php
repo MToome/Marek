@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-sm items-center justify-between bg-base-200">
+<nav class="navbar navbar-expand-sm items-center fixed-top justify-between bg-base-200 z-50">
     <div>
         <h1 class="font-bold">Marek Toome</h1>
     </div>

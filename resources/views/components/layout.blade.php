@@ -3,9 +3,8 @@
 
     <head>
         @vite('resources/js/app.js')
-        @vite('resources/css/app.css')
 
-        <script src="https://cdn.jsdelivr.net/npm/theme-change@2.0.2/index.js"></script>
+
 
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,13 +14,17 @@
 
     </head>
 
-    <body >
-        <x-nav-bar/>
-        <h1 class="text-3xl font-bold text-center">{{ $heading }}</h1>
+    <body>
+        <x-nav-bar />
+
+        <h1 class="text-3xl font-bold text-center m-5">{{ $heading }}</h1>
 
         <div class="text-center">
-            {{ $slot}}
+            {{ $slot }}
         </div>
+
+        <x-back-to-top />
+
     </body>
 
 </html>
