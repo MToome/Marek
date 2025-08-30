@@ -1,3 +1,3 @@
-<div class="m-2 flex justify-center">
+<div class="m-[3%] flex justify-center">
     {{ $slot }}
 </div>
