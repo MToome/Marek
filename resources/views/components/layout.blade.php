@@ -19,7 +19,7 @@
 
         <h1 class="text-3xl font-bold text-center ">{{ $heading }}</h1>
 
-        <div class="text-center">
+        <div>
             {{ $slot }}
         </div>
 

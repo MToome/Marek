@@ -13,3 +13,8 @@ Route::get('/contact', function () {
 Route::get('/cv', function () {
     return view('cv');
 });
+
+Route::get('/calculator', function () {
+    return view('calculator');
+});
+
