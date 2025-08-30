@@ -4,12 +4,16 @@
     </div>
 
     <ul tabindex="0"
-        class="dropdown-content menu bg-base-200 rounded-box z-[1] w-56 max-h-60 overflow-auto p-2 shadow">
-        @foreach ($themes as $theme)
-            <li>
-                <a onclick="setTheme('{{ $theme }}')">{{ ucfirst($theme) }}</a>
-            </li>
-        @endforeach
+        class="dropdown-content bg-base-200 rounded-box z-[1]  max-h-60 overflow-y-auto overflow-x-hidden p-2 shadow w-46 font-bold">
+
+            @foreach ($themes as $theme => $icon)
+                <ul class="menu">
+                    <li>
+                        <a onclick="setTheme('{{ $theme }}')">{{ $icon }}{{ ucfirst($theme) }}</a>
+                    </li>
+                </ul>
+
+                @endforeach
     </ul>
 </div>
 
@@ -26,3 +30,5 @@
         });
     </script>
 @endonce
+
+

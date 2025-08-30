@@ -5,7 +5,6 @@
 
     <div class="absolute left-1/2 transform -translate-x-1/2 flex">
         <x-nav-link href="/" :active="request()->is('/')">Home</x-nav-link>
-        <x-nav-link href="/cv" :active="request()->is('cv')">CV</x-nav-link>
         <x-nav-link href="/contact" :active="request()->is('contact')">Contact</x-nav-link>
         <x-nav-link href="/calculator" :active="request()->is('calculator')">Calculator</x-nav-link>
     </div>
