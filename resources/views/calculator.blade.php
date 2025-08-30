@@ -81,19 +81,26 @@
         @csrf
         <div>
 
-            <div
-                class="bg-base-200 items-center w-[25%] rounded-box border-8 border-success-100 m-auto justify-center flex flex-col">
+            <div class="bg-base-200 items-center w-[400px] rounded-box border-8 border-success-100 m-auto justify-center flex flex-col">
 
                 {{-- Result screen --}}
-                <div class="text-center flex w-[100%]">
-                    <input type="float" id="result-display" value="0"
-                        class="w-[90%] h-20 bg-secondary text-neutral text-center mt-[3%] m-auto " readonly>
+                <div class="relative w-[90%] m-auto mt-3">
+                    <input type="text" id="result-display" value="0"
+                        class="text-3xl w-full h-20 bg-secondary text-primary-content text-center rounded-lg" readonly>
+                    <span
+                        class="absolute left-[143px] top-[1px] text-secondary-content/50 text-lg ">
+                        RESULT
+                    </span>
                 </div>
 
                 {{-- Calc screen --}}
-                <div class="text-center flex w-[100%]">
+                <div class="relative w-[90%] m-auto mt-3">
                     <input type="float" id="calc-display" value="" placeholder="0"
-                        class="w-[90%] h-20 bg-secondary text-neutral text-center mt-[3%] m-auto " readonly>
+                        class="text-3xl w-full h-20 bg-secondary text-primary-content text-center rounded-lg" readonly>
+                    <span
+                        class="absolute left-[150px] top-[1px] text-lg text-secondary-content/50">
+                        INPUT
+                    </span>
                 </div>
 
                 {{-- Buttons --}}

@@ -19,7 +19,6 @@
         <p class="m-2">LinkedIn: <a class="text-info underline" href="https://www.linkedin.com/in/marek-toome/">Marek Toome</a> </p>
         <p>Github: <a class="text-info underline" href="https://github.com/MToome">MToome</a></p>
 
-        <img src=" https://picsum.photos/500/3000" >
     </div>
 
 
