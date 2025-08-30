@@ -9,17 +9,25 @@
         document.addEventListener('DOMContentLoaded', function() {
             const display = document.getElementById('calc-display');
             const numberButtons = document.querySelectorAll('.btn-num');
-            const clearButton = document.querySelectorAll('.btn-clear');
+            const clearButton = document.querySelector('.btn-clr');
 
+            // ekraan näitab numbrit
             numberButtons.forEach(button => {
                 button.addEventListener('click', function() {
                     const value = this.dataset.value;
                     display.value += value;
                 });
             });
-        })
-        // ekraan näitab numbrit
-        // vajutades tehte märki jätab meelde eelmise nr ja tühjendab ekraani
+
+            // tühjendab ekraani
+            clearButton.addEventListener('click', function() {
+                    display.value = '';
+            });
+
+            // vajutades tehte märki jätab meelde eelmise nr ja tühjendab ekraani
+
+        });
+
         // sisestab uue nr
         // vajutades tehte märki või võrdus märki siis annab eelmiste summade vastuse või siis tühjendab välja ja jätab meelde eelmiste tehete vastuse
     </script>
@@ -41,31 +49,31 @@
                 <div class="flex flex-col justify-center p-2 m-2">
 
                     <x-calc.button-div>
-                        <x-calc.calc-button value="7">7</x-calc.calc-button>
-                        <x-calc.calc-button value="8">8</x-calc.calc-button>
-                        <x-calc.calc-button value="9">9</x-calc.calc-button>
-                        <x-calc.calc-button value="*">*</x-calc.calc-button>
+                        <x-calc.calc-button class="btn-num" value="7">7</x-calc.calc-button>
+                        <x-calc.calc-button class="btn-num" value="8">8</x-calc.calc-button>
+                        <x-calc.calc-button class="btn-num" value="9">9</x-calc.calc-button>
+                        <x-calc.calc-button class="btn-sym" value="*">*</x-calc.calc-button>
                     </x-calc.button-div>
 
                     <x-calc.button-div>
-                        <x-calc.calc-button value="4">4</x-calc.calc-button>
-                        <x-calc.calc-button value="5">5</x-calc.calc-button>
-                        <x-calc.calc-button value="6">6</x-calc.calc-button>
-                        <x-calc.calc-button value="-">-</x-calc.calc-button>
+                        <x-calc.calc-button class="btn-num" value="4">4</x-calc.calc-button>
+                        <x-calc.calc-button class="btn-num" value="5">5</x-calc.calc-button>
+                        <x-calc.calc-button class="btn-num" value="6">6</x-calc.calc-button>
+                        <x-calc.calc-button class="btn-sym" value="-">-</x-calc.calc-button>
                     </x-calc.button-div>
 
                     <x-calc.button-div>
-                        <x-calc.calc-button value="1">1</x-calc.calc-button>
-                        <x-calc.calc-button value="2">2</x-calc.calc-button>
-                        <x-calc.calc-button value="3">3</x-calc.calc-button>
-                        <x-calc.calc-button value="+">+</x-calc.calc-button>
+                        <x-calc.calc-button class="btn-num" value="1">1</x-calc.calc-button>
+                        <x-calc.calc-button class="btn-num" value="2">2</x-calc.calc-button>
+                        <x-calc.calc-button class="btn-num" value="3">3</x-calc.calc-button>
+                        <x-calc.calc-button class="btn-sym" value="+">+</x-calc.calc-button>
                     </x-calc.button-div>
 
                     <x-calc.button-div>
-                        <x-calc.calc-button value=".">.</x-calc.calc-button>
-                        <x-calc.calc-button value="0">0</x-calc.calc-button>
-                        <x-calc.calc-button value="clr">clr</x-calc.calc-button>
-                        <x-calc.calc-button value="=">=</x-calc.calc-button>
+                        <x-calc.calc-button class="btn-sym" value=".">.</x-calc.calc-button>
+                        <x-calc.calc-button class="btn-num" value="0">0</x-calc.calc-button>
+                        <x-calc.calc-button class="btn-clr">clr</x-calc.calc-button>
+                        <x-calc.calc-button class="btn-sym" value="=">=</x-calc.calc-button>
                     </x-calc.button-div>
 
                 </div>

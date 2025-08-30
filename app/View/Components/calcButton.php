@@ -8,11 +8,11 @@ use Illuminate\Contracts\View\View;
 
 class calcbutton extends Component
 {
-    public $id;
+    public $value;
 
-    public function __construct($id)
+    public function __construct($value)
     {
-        $this->id = $id;
+        $this->value = $value;
     }
 
     /**
