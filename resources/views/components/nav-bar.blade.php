@@ -7,6 +7,7 @@
         <x-nav-link href="/" :active="request()->is('/')">Home</x-nav-link>
         <x-nav-link href="/contact" :active="request()->is('contact')">Contact</x-nav-link>
         <x-nav-link href="/calculator" :active="request()->is('calculator')">Calculator</x-nav-link>
+        <x-nav-link href="/weather" :active="request()->is('weather')">Weather</x-nav-link>
     </div>
 
     <div class="ml-auto">
