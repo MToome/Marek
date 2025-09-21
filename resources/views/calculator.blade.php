@@ -4,78 +4,7 @@
         Calculator
     </x-slot:heading>
 
-    <script>
-        // vajutab nuppu
-        document.addEventListener('DOMContentLoaded', function() {
-            const display = document.getElementById('calc-display');
-            const resultDisplay = document.getElementById('result-display');
-            const numberButtons = document.querySelectorAll('.btn-num');
-            const clearButton = document.querySelector('.btn-clr');
-            const symbolButtons = document.querySelectorAll('.btn-symbl');
-
-            let result = 0;
-            let preSym = '';
-
-            // ekraan näitab numbrit
-            numberButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const value = this.dataset.value;
-                    display.value += value;
-                });
-            });
-
-            // tühjendab ekraani
-            clearButton.addEventListener('click', function() {
-                display.value = '0';
-                preValue = '0';
-                preSym = '';
-                result = '0'
-            });
-
-            function calculate(a, op, b) {
-                a = parseFloat(a);
-                b = parseFloat(b);
-
-                switch (op) {
-                    case '+':
-                        return a + b;
-                    case '-':
-                        return a - b;
-                    case '*':
-                        return a * b;
-                    case '/':
-                        return b !== 0 ? a / b : '0'; // prevent ÷0
-                    default:
-                        return b;
-                }
-            }
-
-            symbolButtons.forEach(but => {
-                but.addEventListener('click', function() {
-                    const tempSymbl = this.dataset.value;
-
-                    if (preSym) {
-                        if (display.value == '') {
-                            // compute previous result first
-                            display.value = 0
-                        };
-                        result = calculate(result, preSym, display.value)
-                    } else {
-                        // first time: just store the number
-                        result = parseFloat(display.value);
-                    }
-
-                    resultDisplay.value = result; // show intermediate result
-                    preSym = tempSymbl; // save operator for next step
-                    display.value = ''; // clear input for next number
-                });
-            });
-
-
-
-
-        });
-    </script>
+    <x-calc.calculator-brain/>
 
     <form method="POST" action="/calculate">
         @csrf
@@ -85,7 +14,7 @@
 
                 {{-- Result screen --}}
                 <div class="relative w-[90%] m-auto mt-3">
-                    <input type="text" id="result-display" value="0"
+                    <input type="text" id="result-display" value="" placeholder="0"
                         class="text-3xl w-full h-20 bg-secondary text-primary-content text-center rounded-lg" readonly>
                     <span
                         class="absolute left-[143px] top-[1px] text-secondary-content/50 text-lg ">
