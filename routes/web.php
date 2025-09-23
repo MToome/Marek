@@ -22,3 +22,7 @@ Route::get('/calculator', function () {
 Route::get('/weather', function () {
     return view('weather');
 });
+
+Route::get('/csv_read', function () {
+    return view('csv_read');
+});

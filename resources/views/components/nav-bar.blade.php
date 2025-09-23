@@ -8,6 +8,7 @@
         <x-nav-link href="/contact" :active="request()->is('contact')">Contact</x-nav-link>
         <x-nav-link href="/calculator" :active="request()->is('calculator')">Calculator</x-nav-link>
         <x-nav-link href="/weather" :active="request()->is('weather')">Weather</x-nav-link>
+        <x-nav-link href="/csv_read" :active="request()->is('csv_read')">CSV Parsing</x-nav-link>
     </div>
 
     <div class="ml-auto">

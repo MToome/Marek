@@ -3,5 +3,4 @@
         Hello
     </x-slot:heading>
 
-    driim
 </x-layout>
