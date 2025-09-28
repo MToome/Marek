@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CsvParseController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DataController;
 
@@ -26,3 +27,8 @@ Route::get('/weather', function () {
 Route::get('/csv_read', function () {
     return view('csv_read');
 });
+Route::post('/csv_read', function () {
+    dd(request()->all());
+});
+
+Route::get('/parse-csv', [CsvParseController::class, 'parseCsv'])->name('parse.csv');
