@@ -1,5 +1,16 @@
 <x-layout>
 
+    <style>
+
+        .heading {
+            margin: 20px;
+            padding: 20px;
+            background-color: white;
+            border-style: solid;
+            border-color: blue;
+        }
+
+    </style>
 
     <x-slot:heading>
         CSV parsing
@@ -8,12 +19,23 @@
     <form method="POST" action="/csv_read" class="text-center">
         @csrf
 
+        <div >
+            <table>
+                <tr class="heading">
+                    <th class="heading">Serial nr</th>
+                    <th class="heading">Name</th>
+                    <th class="heading">Price without Tax</th>
+                    <th>Price with Tax</th>
+                </tr>
+            </table>
+        </div>
+
         <div id="csvData" class="text-center">r</div>
 
     </form>
 
     <script>
-        fetch("{{ route('parse.csv') }}")
+        fetch(@json(route('parse.csv')))
             .then(response => response.json())
             .then(response => {
                 let html = "<ul>";
@@ -21,6 +43,7 @@
                     // row array to a string for display
                     html += `<li>${row.join(", ")}</li>`;
                 });
+                html += "</ul>";
                 document.getElementById("csvData").innerHTML = html;
             })
             .catch(error => {

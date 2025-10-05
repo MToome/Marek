@@ -20,12 +20,24 @@ class CsvParseController extends Controller
             // $columns = str_getcsv($line, "\t");
 
             $trimLine = [];
+            $trimNameArray = [];
+
             $values = explode("\t", $line);
 
             foreach ($values as $value) {
                 $trimValue = trim($value, '"');
+                $trimValue = trim($trimValue, ',');
                 $trimLine[] = mb_convert_encoding($trimValue, 'UTF-8', 'auto');
             }
+
+            $name = explode(",", $trimLine[1]);
+            $nameCon = "";
+
+            foreach ($name as $nam) {
+                $trimName = trim($nam, '"');
+                $nameCon .= $trimName . " ";
+            }
+            $trimLine[1] = $nameCon;
 
             fputcsv($csvFile, $trimLine);
         }
@@ -45,9 +57,7 @@ class CsvParseController extends Controller
         $csv->setEscape(''); // Set escape character to default double quote
 
         // Get 25 records starting from the 11th row
-        $stmt = (new Statement())
-            ->offset(10)
-            ->limit(25);
+        $stmt = (new Statement());
 
         $records = $stmt->process($csv);
 
