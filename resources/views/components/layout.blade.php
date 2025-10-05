@@ -1,29 +1,29 @@
-<!DOCTYPE html class="h-full bg-gray-900">
+<!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        @vite('resources/js/app.js')
+<head>
+    @vite('resources/js/app.js')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-datatables@1.10.1/dist/vanilla-dataTables.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @stack('meta')
+    <title>Marek's example page</title>
+</head>
 
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<body class="h-full ">
+    <x-nav-bar />
 
-        @stack('meta')
+    <h1 class="text-5xl font-bold text-center m-4">{{ $heading }}</h1>
 
-        <title>Marek's example page</title>
+    <div>
+        {{ $slot }}
+    </div>
 
-    </head>
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-datatables@1.10.1/dist/vanilla-dataTables.min.js"></script>
 
-    <body>
-        <x-nav-bar />
+    {{ $scripts ?? '' }}
 
-        <h1 class="text-5xl font-bold text-center m-4">{{ $heading }}</h1>
-
-        <div>
-            {{ $slot }}
-        </div>
-
-        <x-back-to-top />
-
-    </body>
+    <x-back-to-top />
+</body>
 
 </html>

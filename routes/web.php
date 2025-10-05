@@ -32,3 +32,4 @@ Route::post('/csv_read', function () {
 });
 
 Route::get('/parse-csv', [CsvParseController::class, 'parseCsv'])->name('parse.csv');
+Route::get('/csv_read', [CsvParseController::class, 'showTableView'])->name('csv.view');

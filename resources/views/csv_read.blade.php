@@ -1,57 +1,50 @@
-<x-layout>
+<x-layout heading="Car Parts Table">
+    <div class="overflow-x-auto">
+        <table id="csvTable" class="min-w-full border border-gray-300 rounded-md text-sm">
+            <thead id="tableHead" class="bg-gray-800 text-white"></thead>
+            <tbody id="tableBody" class="divide-y divide-gray-200"></tbody>
+        </table>
+    </div>
 
-    <style>
+    <x-slot:scripts>
+        <script>
+            fetch(@json(route('parse.csv')))
+                .then(res => res.json())
+                .then(data => {
+                    const headers = data.headers;
+                    const rows = data.rows;
 
-        .heading {
-            margin: 20px;
-            padding: 20px;
-            background-color: white;
-            border-style: solid;
-            border-color: blue;
-        }
+                    // Build table header
+                    let headHtml = '<tr>';
+                    headers.forEach(h => headHtml += `<th class="px-4 py-2 text-left">${h}</th>`);
+                    headHtml += '</tr>';
+                    document.getElementById('tableHead').innerHTML = headHtml;
 
-    </style>
+                    // Build table body
+                    let bodyHtml = '';
+                    rows.forEach(row => {
+                        bodyHtml += '<tr class="hover:bg-gray-50">';
+                        headers.forEach(h => {
+                            bodyHtml += `<td class="px-4 py-2">${row[h] ?? ''}</td>`;
+                        });
+                        bodyHtml += '</tr>';
+                    });
+                    document.getElementById('tableBody').innerHTML = bodyHtml;
 
-    <x-slot:heading>
-        CSV parsing
-    </x-slot:heading>
+                    // Initialize Vanilla-DataTable
+                    new DataTable('#csvTable', {
+                        perPage: 25,
+                        perPageSelect: [10, 25, 50, 100],
+                        labels: {
+                            placeholder: "Search...",
+                            perPage: "{select} rows per page",
+                            noRows: "No data found",
+                            info: "Showing {start}–{end} of {rows} entries"
+                        }
+                    });
+                })
+                .catch(err => console.error('Error loading CSV:', err));
 
-    <form method="POST" action="/csv_read" class="text-center">
-        @csrf
-
-        <div >
-            <table>
-                <tr class="heading">
-                    <th class="heading">Serial nr</th>
-                    <th class="heading">Name</th>
-                    <th class="heading">Price without Tax</th>
-                    <th>Price with Tax</th>
-                </tr>
-            </table>
-        </div>
-
-        <div id="csvData" class="text-center">r</div>
-
-    </form>
-
-    <script>
-        fetch(@json(route('parse.csv')))
-            .then(response => response.json())
-            .then(response => {
-                let html = "<ul>";
-                response.forEach(row => {
-                    // row array to a string for display
-                    html += `<li>${row.join(", ")}</li>`;
-                });
-                html += "</ul>";
-                document.getElementById("csvData").innerHTML = html;
-            })
-            .catch(error => {
-                console.error("Error fetching CSV data:", error);
-                document.getElementById("csvData").innerHTML = "Failed to load data.";
-            });
-    </script>
-
-
-
+        </script>
+    </x-slot:scripts>
 </x-layout>

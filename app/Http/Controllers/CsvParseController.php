@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use League\Csv\Reader;
 use League\Csv\Statement;
 
@@ -15,56 +16,68 @@ class CsvParseController extends Controller
         $csvFilePath = storage_path($outputFile);
         $csvFile = fopen($csvFilePath, "w");
 
+        // Write header once
+        fputcsv($csvFile, ['Serial nr', 'Name', 'Price without VAT', 'Type', 'Price with VAT']);
+
         foreach ($lines as $line) {
-            // Split the line into columns (assuming tab-delimited input)
-            // $columns = str_getcsv($line, "\t");
-
-            $trimLine = [];
-            $trimNameArray = [];
-
             $values = explode("\t", $line);
+            $values = array_map(fn($v) => trim($v, "\" \t,"), $values);
 
-            foreach ($values as $value) {
-                $trimValue = trim($value, '"');
-                $trimValue = trim($trimValue, ',');
-                $trimLine[] = mb_convert_encoding($trimValue, 'UTF-8', 'auto');
-            }
+            // Use comas to seperate
+            $nameParts = explode(",", $values[1] ?? '');
+            // Implode return string of array, separate with space each array element, trim "
+            $name = implode(" ", array_map(fn($n) => trim($n, '"'), $nameParts));
+            // Assigne better looking name
+            $values[1] = $name;
 
-            $name = explode(",", $trimLine[1]);
-            $nameCon = "";
+            // Select the required columns
+            $showData = [
+                // ?? if their is no value use that what is between ''
+                $values[0] ?? '',
+                $values[1] ?? '',
+                $values[8] ?? '',
+                $values[9] ?? '',
+                $values[10] ?? '',
+            ];
 
-            foreach ($name as $nam) {
-                $trimName = trim($nam, '"');
-                $nameCon .= $trimName . " ";
-            }
-            $trimLine[1] = $nameCon;
-
-            fputcsv($csvFile, $trimLine);
+            fputcsv($csvFile, $showData);
         }
+
         fclose($csvFile);
     }
 
     public function parseCsv()
     {
-        $csvFilePath = storage_path('app\car_parts.csv');
+        $csvFilePath = storage_path('app/car_parts.csv');
         if (!file_exists($csvFilePath)) {
-            $this->createCsvFile('app\LE.txt', 'app\car_parts.csv');
+            $this->createCsvFile('app/LE.txt', 'app/car_parts.csv');
         }
 
         $csv = Reader::createFromPath($csvFilePath, 'r');
-        $csv->setDelimiter(','); // Set the delimiter to comma (CSV standard)
-        $csv->setHeaderOffset(null); // What row is the header
-        $csv->setEscape(''); // Set escape character to default double quote
+        $csv->setDelimiter(',');
+        $csv->setHeaderOffset(0); // first row = header
+        $csv->setEscape('');
 
-        // Get 25 records starting from the 11th row
-        $stmt = (new Statement());
-
+        $stmt = new Statement();
         $records = $stmt->process($csv);
 
-        // Convert the records to an array
-        $data = iterator_to_array($records, true);
-        $data = array_values($data);
+        // Convert iterator to array
+        $data = [];
+        foreach ($records as $row) {
+            $data[] = $row; // associative array based on CSV header
+        }
 
-        return response()->json($data);
+        $headers = $csv->getHeader();
+
+        return response()->json([
+            'headers' => $headers,
+            'rows' => $data,
+        ]);
+    }
+
+
+    public function showTableView()
+    {
+        return view('csv_read');
     }
 }
