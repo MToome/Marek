@@ -33,11 +33,11 @@ class CsvParseController extends Controller
             // Select the required columns
             $showData = [
                 // ?? if their is no value use that what is between ''
-                $values[0] ?? '',
-                $values[1] ?? '',
-                $values[8] ?? '',
-                $values[9] ?? '',
-                $values[10] ?? '',
+                $values[0] ?? '0',
+                $values[1] ?? '0',
+                $values[8] ?? '0',
+                $values[9] ?? '0',
+                $values[10] ?? '0',
             ];
 
             fputcsv($csvFile, $showData);
@@ -46,32 +46,44 @@ class CsvParseController extends Controller
         fclose($csvFile);
     }
 
-    public function parseCsv()
+    public function parseCsv(Request $request)
     {
         $csvFilePath = storage_path('app/car_parts.csv');
+
         if (!file_exists($csvFilePath)) {
             $this->createCsvFile('app/LE.txt', 'app/car_parts.csv');
         }
 
+        // Pagination input
+        $page = (int) $request->query('page', 1);
+        $perPage = (int) $request->query('perPage', 25);
+
         $csv = Reader::createFromPath($csvFilePath, 'r');
         $csv->setDelimiter(',');
-        $csv->setHeaderOffset(0); // first row = header
+        $csv->setHeaderOffset(0);
         $csv->setEscape('');
 
         $stmt = new Statement();
+
+        // Get all records as an iterator
         $records = $stmt->process($csv);
-
-        // Convert iterator to array
-        $data = [];
-        foreach ($records as $row) {
-            $data[] = $row; // associative array based on CSV header
-        }
-
+        $allData = iterator_to_array($records, true);
         $headers = $csv->getHeader();
+
+        // Pagination math
+        $total = count($allData);
+        $offset = ($page - 1) * $perPage;
+        $pagedData = array_slice($allData, $offset, $perPage);
 
         return response()->json([
             'headers' => $headers,
-            'rows' => $data,
+            'rows' => array_values($pagedData),
+            'pagination' => [
+                'page' => $page,
+                'perPage' => $perPage,
+                'total' => $total,
+                'totalPages' => ceil($total / $perPage),
+            ]
         ]);
     }
 

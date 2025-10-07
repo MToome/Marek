@@ -1,6 +1,6 @@
 <div {{ $attributes->merge(['class' => 'dropdown dropdown-end']) }}>
-    <div tabindex="0" class="btn m-1">
-        Theme
+    <div tabindex="0" >
+        <button class="btn btn-outline btn-primary rounded-md px-3 py-2 text-sm font-medium m-1">Theme</button>
     </div>
 
     <ul tabindex="0"

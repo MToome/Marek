@@ -27,9 +27,8 @@ Route::get('/weather', function () {
 Route::get('/csv_read', function () {
     return view('csv_read');
 });
-Route::post('/csv_read', function () {
-    dd(request()->all());
-});
+
 
 Route::get('/parse-csv', [CsvParseController::class, 'parseCsv'])->name('parse.csv');
+
 Route::get('/csv_read', [CsvParseController::class, 'showTableView'])->name('csv.view');
