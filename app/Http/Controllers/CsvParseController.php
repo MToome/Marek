@@ -54,14 +54,11 @@ class CsvParseController extends Controller
             $this->createCsvFile('app/LE.txt', 'app/car_parts.csv');
         }
 
-        // Pagination input
-        $page = (int) $request->query('page', 1);
-        $perPage = (int) $request->query('perPage', 25);
-
         $csv = Reader::createFromPath($csvFilePath, 'r');
         $csv->setDelimiter(',');
         $csv->setHeaderOffset(0);
         $csv->setEscape('');
+
 
         $stmt = new Statement();
 
@@ -70,7 +67,24 @@ class CsvParseController extends Controller
         $allData = iterator_to_array($records, true);
         $headers = $csv->getHeader();
 
-        // Pagination math
+
+        $search = strtolower($request->query('search', ''));
+        if ($search !== '') {
+            $allData = array_filter($allData, function ($row) use ($search) {
+                foreach ($row as $value) {
+                    if (stripos($value, $search) !== false) {
+                        return true;
+                    }
+                }
+                return false;
+            });
+        }
+
+        // Pagination input
+        $page = (int) $request->query('page', 1);
+        $perPage = (int) $request->query('perPage', 25);
+
+        // Pagination math        
         $total = count($allData);
         $offset = ($page - 1) * $perPage;
         $pagedData = array_slice($allData, $offset, $perPage);
